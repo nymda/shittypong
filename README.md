@@ -1,2 +1,0 @@
-# shittypong
-its shitty pong
