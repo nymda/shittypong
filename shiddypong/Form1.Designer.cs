@@ -60,9 +60,11 @@
             this.ClientSize = new System.Drawing.Size(526, 280);
             this.Controls.Add(this.PBMAIN);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Bullshit pong";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KEYPRESS);
             ((System.ComponentModel.ISupportInitialize)(this.PBMAIN)).EndInit();
             this.ResumeLayout(false);
 

@@ -85,6 +85,7 @@ namespace shiddypong
         bool hr = false;
         bool ht = false;
         bool hb = false;
+        int death = 0;
         private void GAMELOOP_Tick(object sender, EventArgs e)
         {
             b.dx = (float)Math.Cos(b.a);
@@ -98,7 +99,7 @@ namespace shiddypong
             {
                 //hit
                 float isc = lefty - b.y;
-                b.a = b.a + PIf - -(float)Math.Sin(isc);
+                b.a = b.a + PIf - -((float)Math.Sin(isc) / 2);
                 Console.WriteLine(isc);
                 hl = true;
             }
@@ -106,7 +107,7 @@ namespace shiddypong
             {
                 //hit
                 float isc = righty - b.y;
-                b.a = b.a + PIf - -(float)Math.Sin(isc);
+                b.a = b.a + PIf - -((float)Math.Sin(isc) / 2);
                 Console.WriteLine(isc);
                 hr = true;
             }
@@ -133,17 +134,40 @@ namespace shiddypong
                 hb = false;
             }
 
+            if (b.x < 0 || b.x > 500)
+            {
+                b = new ball(25, 125, 1, 0, 2 * PIf);
+                death = 5;
+            }
+
             drawGame();
         }
 
         public void drawGame()
         {
-            g.FillRectangle(Brushes.White, 0, 0, 500, 250);
+            if (death > 0)
+            {
+                g.FillRectangle(Brushes.Red, 0, 0, 500, 250);
+                death--;
+            }
+            else
+            {
+                g.FillRectangle(Brushes.White, 0, 0, 500, 250);
+            }
+
             g.DrawRectangle(Pens.Black, 10, lefty - 25, 5, 50);
             g.DrawRectangle(Pens.Black, 485, righty - 25, 5, 50);
-            g.FillEllipse(Brushes.Red, b.x - 5, b.y - 5, 10, 10);
-            g.DrawLine(Pens.Red, b.x, b.y, b.x+ b.dx * 50, b.y + b.dy * 50);
+            g.FillEllipse(Brushes.Black, b.x - 5, b.y - 5, 10, 10);
+            g.DrawLine(Pens.Red, b.x, b.y, b.x+ b.dx * 10, b.y + b.dy * 10);
             PBMAIN.Image = canvas;
+        }
+
+        private void KEYPRESS(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == (char)Keys.R)
+            {
+                b = new ball(25, 125, 1, 0, 2 * PIf);
+            }
         }
     }
 
